@@ -1,6 +1,6 @@
 // BUKUTAMUWEB — Frontend SPA. Pindah menu tanpa reload; data tampil dari cache lokal dulu (SWR), lalu disegarkan di latar.
 const G = window.APP_CONFIG.GAS_URL;
-const TUJ = ['Konsultasi SPBE / Aplikasi', 'Koordinasi Antar Instansi', 'Kemitraan Media & Pers', 'Teknis Jaringan & Data', 'Urusan Lainnya'];
+const TUJ = ['SEKRETARIAT', 'Bidang Pemuda & Olahraga', 'Bidang Pembinaan SMP', 'Bidang Pembinaan SD', 'Bidang Pembinaan Paud & Dikmas'];
 const HARI = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
