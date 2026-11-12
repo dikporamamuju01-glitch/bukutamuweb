@@ -43,7 +43,7 @@ function shell(inner, act) {
   return `<header class="nav"><a href="#/beranda" class="br">${l}<b>${esc(B.set.judul || 'Buku Tamu Digital')}</b></a>
   <nav>${m.map(([k, n]) => `<a href="#/${k}" class="${act === k ? 'on' : ''}">${n}</a>`).join('')}</nav>
   <a class="btn" href="${S ? '#/daftar' : '#/login'}">${S ? 'Dashboard' : 'Login Petugas'}</a></header>
-  <main class="pg">${inner}</main><footer>© 2026 Dinas Komunikasi &amp; Informatika · <a href="#" onclick="return fx()">Suara &amp; kupu-kupu: ${FX ? 'Aktif' : 'Mati'}</a></footer>`;
+  <main class="pg">${inner}</main><footer>© 2026 Dinas Pendidikan Pemuda dan Olahraga Kab. Mamuju · <a href="#" onclick="return fx()">Suara &amp; kupu-kupu: ${FX ? 'Aktif' : 'Mati'}</a></footer>`;
 }
 function dash(inner, act) {
   const m = [['daftar', 'Daftar Tamu'], ['rekap', 'Rekap Kunjungan']]; if (S.r === 'superadmin') m.push(['set', 'Pengaturan']);
