@@ -57,3 +57,17 @@ footer{text-align:center;padding:24px;color:var(--mu);border-top:1px solid var(-
 #fl{max-width:500px;padding:36px}
 #fl input{font-size:17px;height:54px}
 #fl .btn{font-size:18px;padding:14px}
+.nav nav{display:none}
+.nav .br{margin-right:auto}
+.hb{background:transparent;border:1px solid var(--bd);color:var(--tx);border-radius:8px;font-size:24px;width:48px;height:48px;cursor:pointer;margin-right:14px;transition:.15s}
+.hb:hover{border-color:var(--pr);background:rgba(59,130,246,.1)}
+#dm{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.25s;z-index:70}
+#dr{position:fixed;top:0;left:0;bottom:0;width:300px;max-width:85vw;background:var(--s);border-right:1px solid var(--bd);transform:translateX(-100%);transition:transform .25s;z-index:80;padding:20px;display:flex;flex-direction:column;gap:6px;box-shadow:0 0 40px rgba(0,0,0,.6)}
+.dro #dr{transform:none}
+.dro #dm{opacity:1;pointer-events:auto}
+#dr .dh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px;font-size:17px}
+#dr .x{padding:6px 12px}
+#dr a{font-size:19px;padding:14px 16px;border-radius:8px}
+#dr a:hover{background:rgba(59,130,246,.1)}
+#dr a.on{background:var(--pr);box-shadow:0 0 20px rgba(59,130,246,.35)}
+#dr a.btn{margin-top:auto;text-align:center;border:1px solid var(--bd)}
