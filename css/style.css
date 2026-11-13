@@ -38,3 +38,4 @@ td{padding:12px;border-bottom:1px solid var(--bd);vertical-align:top}tr:hover td
 footer{text-align:center;padding:24px;color:var(--mu);border-top:1px solid var(--bd);margin-top:32px}
 @media(max-width:900px){.two,.dsh{grid-template-columns:1fr}.dsh aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap}.usr{margin:0 0 0 auto}.pg{padding:16px}}
 .ph img{aspect-ratio:auto;height:auto}
+.ph img{aspect-ratio:16/9;height:auto;object-fit:cover;object-position:center 20%}
