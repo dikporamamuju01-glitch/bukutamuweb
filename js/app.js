@@ -1,4 +1,4 @@
-﻿// BUKUTAMUWEB â€” Frontend SPA. Pindah menu tanpa reload; data tampil dari cache lokal dulu (SWR), lalu disegarkan di latar.
+// BUKUTAMUWEB — Frontend SPA. Pindah menu tanpa reload; data tampil dari cache lokal dulu (SWR), lalu disegarkan di latar.
 const G = window.APP_CONFIG.GAS_URL;
 const TUJ = ['SEKRETARIAT', 'Bidang Pemuda & Olahraga', 'Bidang Pembinaan SMP', 'Bidang Pembinaan SD', 'Bidang Pembinaan Paud & Dikmas'];
 const HARI = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -43,12 +43,12 @@ function shell(inner, act) {
   return `<header class="nav"><a href="#/beranda" class="br">${l}<b>${esc(B.set.judul || 'Buku Tamu Digital')}</b></a>
   <nav>${m.map(([k, n]) => `<a href="#/${k}" class="${act === k ? 'on' : ''}">${n}</a>`).join('')}</nav>
   <a class="btn" href="${S ? '#/daftar' : '#/login'}">${S ? 'Dashboard' : 'Login Petugas'}</a></header>
-  <main class="pg">${inner}</main><footer>Â© 2026 Dinas Pendidikan Pemuda dan Olahraga Kab. Mamuju Â· <a href="#" onclick="return fx()">Suara &amp; kupu-kupu: ${FX ? 'Aktif' : 'Mati'}</a></footer>`;
+  <main class="pg">${inner}</main><footer>© 2026 Dinas Pendidikan Pemuda dan Olahraga Kab. Mamuju · <a href="#" onclick="return fx()">Suara &amp; kupu-kupu: ${FX ? 'Aktif' : 'Mati'}</a></footer>`;
 }
 function dash(inner, act) {
   const m = [['daftar', 'Daftar Tamu'], ['rekap', 'Rekap Kunjungan']]; if (S.r === 'superadmin') m.push(['set', 'Pengaturan']);
   return `<div class="dsh"><aside><b class="br" style="padding:8px 12px">Panel Admin</b>${m.map(([k, n]) => `<a href="#/${k}" class="${act === k ? 'on' : ''}">${n}</a>`).join('')}
-  <div class="usr"><small>${esc(S.n)} Â· ${esc(S.r)}</small><a class="btn" href="#/beranda">Ke Beranda</a><button class="btn" onclick="keluar()">Keluar</button></div></aside><main class="pg">${inner}</main></div>`;
+  <div class="usr"><small>${esc(S.n)} · ${esc(S.r)}</small><a class="btn" href="#/beranda">Ke Beranda</a><button class="btn" onclick="keluar()">Keluar</button></div></aside><main class="pg">${inner}</main></div>`;
 }
 window.fx = () => { FX = !FX; LS('btd_fx', FX); kp.style.display = FX ? '' : 'none'; render(); return false; };
 window.keluar = () => { S = null; LS('btd_s', null); go('#/beranda'); };
@@ -70,13 +70,13 @@ P.beranda = () => {
   const f = j => B.foto.filter(x => x.Jenis === j), kartu = x => `<div class="card ph"><img loading="lazy" src="${esc(drv(x.Url))}" alt="${esc(x.Nama)}" onclick="lb(this.src)"><b>${esc(x.Nama)}</b><small>${esc(x.Keterangan)}</small></div>`;
   const sek = (t, j, n) => f(j).length ? `<div class="lab">${t}</div><div class="grid" style="margin-top:8px">${f(j).slice(0, n).map(kartu).join('')}</div>` : '';
   return shell(`<section class="hero"><div class="lab">Portal buku tamu digital resmi</div><h1>Selamat Datang di <span class="cy">${esc(B.set.judul || 'Buku Tamu Digital')}</span></h1>
-  <p>Isi data kunjungan Anda dengan cepat, tertib, dan transparan.</p><a class="btn p" href="#/isi">Isi Buku Tamu Sekarang â†’</a> <a class="btn" href="#/galeri">Lihat Galeri Kegiatan</a></section>
+  <p>Isi data kunjungan Anda dengan cepat, tertib, dan transparan.</p><a class="btn p" href="#/isi">Isi Buku Tamu Sekarang →</a> <a class="btn" href="#/galeri">Lihat Galeri Kegiatan</a></section>
   ${sek('Jajaran Pimpinan', 'pimpinan', 6)}${sek('Staf Kantor', 'staf', 8)}`, 'beranda');
 };
 P.galeri = () => { const g = B.foto.filter(x => x.Jenis === 'kegiatan'); return shell(`<h1>Galeri Dokumentasi &amp; Kegiatan</h1><p class="mu" style="margin:8px 0 24px">${g.length} foto kegiatan. Klik foto untuk memperbesar.</p><div class="grid">${g.map(x => `<div class="card ph"><img loading="lazy" src="${esc(drv(x.Url))}" alt="" onclick="lb(this.src)"><b>${esc(x.Nama)}</b><small>${esc(x.Keterangan)}</small></div>`).join('') || '<p class="mu">Belum ada foto.</p>'}</div>`, 'galeri'); };
 P.about = () => shell(`<h1>Tentang Kami</h1><div class="card" style="margin-top:20px;white-space:pre-line">${esc(B.set.about || 'Informasi kantor belum diisi oleh super admin.')}</div>`, 'about');
-P.isi = () => shell(`<div class="two"><form class="card" id="ft"><div class="lab">Langkah 01/01 Â· Penginputan data kunjungan</div><h1 style="margin:6px 0 20px">Formulir Buku Tamu Digital</h1>${fTamu({ Tanggal: hariIni(), Jam: jamIni() })}
-  <div style="display:flex;justify-content:space-between"><button type="reset" class="btn">Reset Formulir</button><button class="btn p">Simpan Data Tamu â†’</button></div></form>
+P.isi = () => shell(`<div class="two"><form class="card" id="ft"><div class="lab">Langkah 01/01 · Penginputan data kunjungan</div><h1 style="margin:6px 0 20px">Formulir Buku Tamu Digital</h1>${fTamu({ Tanggal: hariIni(), Jam: jamIni() })}
+  <div style="display:flex;justify-content:space-between"><button type="reset" class="btn">Reset Formulir</button><button class="btn p">Simpan Data Tamu →</button></div></form>
   <div class="card" id="ok" style="text-align:center"><div class="lab">Pratinjau status</div><p class="mu" style="margin-top:12px">Setelah disimpan, konfirmasi muncul di sini.</p></div></div>`, 'isi');
 P.login = () => shell(`<form class="card" id="fl" style="max-width:420px;margin:40px auto"><div class="lab">Portal khusus petugas &amp; pimpinan</div><h1 style="margin:6px 0 20px">Masuk ke Sistem</h1>
   <div style="margin-bottom:16px"><label>Username <i>*</i></label><input name="u" required autocomplete="username"></div><div style="margin-bottom:20px"><label>Kata sandi <i>*</i></label><input name="p" type="password" required autocomplete="current-password"></div>
@@ -144,7 +144,7 @@ document.addEventListener('submit', async e => {
   e.preventDefault(); const f = e.target, b = e.submitter; if (!b) return; b.disabled = true; const d = baca(f); let r;
   if (f.id === 'ft') {
     r = await api('tamu.simpan', d);
-    if (r.ok) { $('#ok').innerHTML = `<div class="lab">Pratinjau status</div><h2 class="ok" style="margin:12px 0">âœ” ${esc(r.msg)}</h2><p>${esc(d.Nama)} Â· ${esc(d.Tujuan)}<br><small>${esc(d.Tanggal)} ${esc(d.Jam)}</small></p>`; f.reset(); f.querySelector('[name=Tanggal]').value = hariIni(); f.querySelector('[name=Jam]').value = jamIni(); }
+    if (r.ok) { $('#ok').innerHTML = `<div class="lab">Pratinjau status</div><h2 class="ok" style="margin:12px 0">✔ ${esc(r.msg)}</h2><p>${esc(d.Nama)} · ${esc(d.Tujuan)}<br><small>${esc(d.Tanggal)} ${esc(d.Jam)}</small></p>`; f.reset(); f.querySelector('[name=Tanggal]').value = hariIni(); f.querySelector('[name=Jam]').value = jamIni(); }
   } else if (f.id === 'fl') {
     r = await api('login', d); if (r.ok) { S = { t: r.t, r: r.r, n: r.n }; LS('btd_s', S); go('#/daftar'); }
   } else if (f.id === 'fs') { r = await api('set.simpan', d); if (r.ok) await segarBoot(); }
@@ -154,7 +154,7 @@ document.addEventListener('submit', async e => {
 });
 
 // ---- Kupu-kupu pengikut kursor (ringan, berhenti saat tab tidak aktif) ----
-const kp = document.createElement('div'); kp.id = 'kp'; kp.textContent = 'ðŸ¦‹'; kp.style.display = FX ? '' : 'none'; document.body.append(kp);
+const kp = document.createElement('div'); kp.id = 'kp'; kp.textContent = '🦋'; kp.style.display = FX ? '' : 'none'; document.body.append(kp);
 let mx = 0, my = 0, px = 0, py = 0; addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
 (function l() { if (FX) { px += (mx - px) * .12; py += (my - py) * .12; kp.style.transform = `translate(${px + 14}px,${py + 14}px)`; } requestAnimationFrame(l); })();
 
