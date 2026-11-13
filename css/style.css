@@ -39,3 +39,21 @@ footer{text-align:center;padding:24px;color:var(--mu);border-top:1px solid var(-
 @media(max-width:900px){.two,.dsh{grid-template-columns:1fr}.dsh aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap}.usr{margin:0 0 0 auto}.pg{padding:16px}}
 .ph img{aspect-ratio:auto;height:auto}
 .ph img{aspect-ratio:16/9;height:auto;object-fit:cover;object-position:center 20%}
+.nav{padding:16px 32px}
+.nav .br b{font-size:19px}
+.nav nav a{font-size:18px;padding:8px 18px}
+.nav>.btn{font-size:17px;padding:11px 24px}
+.hero .btn{font-size:19px;padding:15px 28px}
+.hero h1{font-size:clamp(30px,5vw,48px)}
+#ft{padding:36px}
+#ft h1{font-size:clamp(28px,4vw,42px)}
+#ft label{font-size:13px}
+#ft input,#ft select,#ft textarea{font-size:17px;height:54px}
+#ft textarea{height:120px}
+#ft .btn{font-size:18px;padding:14px 28px}
+.grid{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}
+.ph b{font-size:19px}
+.ph small{font-size:14px}
+#fl{max-width:500px;padding:36px}
+#fl input{font-size:17px;height:54px}
+#fl .btn{font-size:18px;padding:14px}
