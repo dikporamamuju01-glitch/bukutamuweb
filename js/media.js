@@ -51,7 +51,7 @@
   function isi() {
     const on = location.hash === '#/isi'; document.body.classList.toggle('pg-isi', on); if (!on) return;
     const bg = (B.set || {}).bg;
-    document.body.style.setProperty('--bgi', bg ? `linear-gradient(rgba(11,15,25,.5),rgba(11,15,25,.78)),url(${drv(bg)})` : 'radial-gradient(circle at 15% 10%,rgba(59,130,246,.28),transparent 50%),radial-gradient(circle at 85% 85%,rgba(34,211,238,.2),transparent 45%),#0B0F19');
+    document.body.style.setProperty('--bgi', bg ? `linear-gradient(rgba(11,15,25,.5),rgba(11,15,25,.78)),url(${drv(bg)})` : 'radial-gradient(circle at 15% 10%,rgba(59,130,246,.28),transparent 50%),radial-gradient(circle at 85% 85%,rgba(34,211,238,.2),transparent 45%),linear-gradient(#0B0F19,#0B0F19)');
     const two = v.querySelector('.two'); if (!two || two.querySelector('.vf')) return;
     const x = B.foto.find(f => f.Jenis === 'video-form'), h = x && emb(x.Url);
     if (!h && !(S && S.r === 'superadmin')) return;
