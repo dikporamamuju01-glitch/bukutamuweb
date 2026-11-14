@@ -1,7 +1,8 @@
 // Pemotong foto (geser + zoom) di Pengaturan → Foto. Hasil JPEG dikecilkan lalu diunggah ke Drive.
 (function () {
   const R = { pimpinan: [16, 9], staf: [1, 1], kegiatan: [16, 9] }, UK = { potret: [4, 5], lanskap: [16, 9], persegi: [1, 1] };
-  new MutationObserver(() => { const f = document.getElementById('ff'); if (f && !f.dataset.cr) init(f); }).observe(document.getElementById('v'), { childList: true, subtree: true });
+  const scan = () => { const f = document.getElementById('ff'); if (f && !f.dataset.cr) init(f); };
+  new MutationObserver(scan).observe(document.getElementById('v'), { childList: true, subtree: true }); scan();
   function init(f) {
     f.dataset.cr = 1;
     const u = f.querySelector('[name=Url]'); u.required = false; u.placeholder = 'Atau tempel URL foto (opsional)';
