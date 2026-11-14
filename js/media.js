@@ -4,7 +4,7 @@
   const AR = { potret: '4/5', lanskap: '16/9', persegi: '1/1' }, DEF = { pimpinan: 'lanskap', staf: 'persegi', kegiatan: 'lanskap' };
   const LBL = { 'Jajaran Pimpinan': 'pimpinan', 'Staf Kantor': 'staf' };
   const st = document.createElement('style');
-  st.textContent = '.grid[data-ar] .ph img{aspect-ratio:var(--ar)}.vp{position:relative;cursor:pointer}.vp:after{content:"▶";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(59,130,246,.9);display:grid;place-items:center;font-size:24px;padding-left:4px;box-shadow:0 0 20px rgba(59,130,246,.5);pointer-events:none}#pl{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;place-items:center;z-index:90}#pl.on{display:grid}#pl .bx{width:min(1000px,94vw);aspect-ratio:16/9}#pl iframe,#pl video{width:100%;height:100%;border:0;border-radius:12px;background:#000}#pl .x{position:absolute;top:16px;right:16px}body.pg-isi{background-image:var(--bgi)!important;background-size:cover!important;background-attachment:fixed!important}body.pg-isi .card{background:rgba(21,29,46,.82);backdrop-filter:blur(8px)}body.pg-isi .two{grid-template-columns:1.3fr 1fr}#ok{min-height:460px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:36px}#ok h2{font-size:30px}#ok p{font-size:18px}.vf{grid-column:1/-1;max-width:980px;width:100%;margin:0 auto}.vfb{aspect-ratio:16/9;width:100%}.vfb iframe,.vfb video{width:100%;height:100%;border:0;border-radius:12px;background:#000}@media(max-width:900px){body.pg-isi .two{grid-template-columns:1fr}}';
+  st.textContent = '.grid[data-ar] .ph img{aspect-ratio:var(--ar)}.vp{position:relative;cursor:pointer}.vp:after{content:"▶";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(59,130,246,.9);display:grid;place-items:center;font-size:24px;padding-left:4px;box-shadow:0 0 20px rgba(59,130,246,.5);pointer-events:none}#pl{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;place-items:center;z-index:90}#pl.on{display:grid}#pl .bx{width:min(1000px,94vw);aspect-ratio:16/9}#pl iframe,#pl video{width:100%;height:100%;border:0;border-radius:12px;background:#000}#pl .x{position:absolute;top:16px;right:16px}body.pg-isi{background-image:var(--bgi)!important;background-size:cover!important;background-attachment:fixed!important}body.pg-isi .card{background:rgba(21,29,46,.82);backdrop-filter:blur(8px)}body.pg-isi .two{grid-template-columns:1.3fr 1fr;align-items:start}.rc{display:flex;flex-direction:column;gap:24px}#ok{min-height:120px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:16px}#ok h2{font-size:20px;margin:6px 0}#ok p{font-size:14px}.vf{width:100%}.vfb{aspect-ratio:16/9;width:100%}.vfb iframe,.vfb video{width:100%;height:100%;border:0;border-radius:12px;background:#000}@media(max-width:900px){body.pg-isi .two{grid-template-columns:1fr}}';
   document.head.append(st);
 
   // ---- Bingkai per bagian ----
@@ -44,9 +44,9 @@
   // ---- Halaman Pengisian: background + bingkai video ----
   const emb = u => {
     const y = yt(u), d = dr(u);
-    if (y) return `<iframe src="https://www.youtube.com/embed/${y}?rel=0" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-    if (d) return `<iframe src="https://drive.google.com/file/d/${d}/preview" allowfullscreen></iframe>`;
-    if (/\.(mp4|webm)(\?|$)/i.test(u)) return `<video src="${esc(u)}" controls></video>`; return '';
+    if (y) return `<iframe src="https://www.youtube.com/embed/${y}?autoplay=1&mute=1&loop=1&playlist=${y}&playsinline=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    if (d) return `<iframe src="https://drive.google.com/file/d/${d}/preview" allow="autoplay" allowfullscreen></iframe>`;
+    if (/\.(mp4|webm)(\?|$)/i.test(u)) return `<video src="${esc(u)}" controls autoplay muted loop playsinline></video>`; return '';
   };
   function isi() {
     const on = location.hash === '#/isi'; document.body.classList.toggle('pg-isi', on); if (!on) return;
@@ -57,7 +57,9 @@
     if (!h && !(S && S.r === 'superadmin')) return;
     const c = document.createElement('div'); c.className = 'card vf';
     c.innerHTML = `<h2>${esc(x ? x.Nama : 'Video Panduan')}</h2>` + (h ? `<div class="vfb">${h}</div><small class="mu">${esc(x.Keterangan)}</small>` : '<p class="mu">Belum ada video. Tambahkan lewat Pengaturan → Foto Beranda & Galeri: pilih Jenis "video-form", lalu tempel link YouTube atau Google Drive. (Pesan ini hanya terlihat oleh super admin.)</p>');
-    two.append(c);
+    let rc = two.querySelector('.rc'); const ok = two.querySelector('#ok');
+    if (!rc && ok) { rc = document.createElement('div'); rc.className = 'rc'; ok.replaceWith(rc); rc.append(ok); }
+    (rc || two).append(c);
   }
 
   // ---- Menu Pengaturan: ukuran bingkai + jenis "video" ----
