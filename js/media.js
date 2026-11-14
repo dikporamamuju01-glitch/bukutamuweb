@@ -4,7 +4,7 @@
   const AR = { potret: '4/5', lanskap: '16/9', persegi: '1/1' }, DEF = { pimpinan: 'lanskap', staf: 'persegi', kegiatan: 'lanskap' };
   const LBL = { 'Jajaran Pimpinan': 'pimpinan', 'Staf Kantor': 'staf' };
   const st = document.createElement('style');
-  st.textContent = '.grid[data-ar] .ph img{aspect-ratio:var(--ar)}.vp{position:relative;cursor:pointer}.vp:after{content:"▶";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(59,130,246,.9);display:grid;place-items:center;font-size:24px;padding-left:4px;box-shadow:0 0 20px rgba(59,130,246,.5);pointer-events:none}#pl{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;place-items:center;z-index:90}#pl.on{display:grid}#pl .bx{width:min(1000px,94vw);aspect-ratio:16/9}#pl iframe,#pl video{width:100%;height:100%;border:0;border-radius:12px;background:#000}#pl .x{position:absolute;top:16px;right:16px}';
+  st.textContent = '.grid[data-ar] .ph img{aspect-ratio:var(--ar)}.vp{position:relative;cursor:pointer}.vp:after{content:"▶";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(59,130,246,.9);display:grid;place-items:center;font-size:24px;padding-left:4px;box-shadow:0 0 20px rgba(59,130,246,.5);pointer-events:none}#pl{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;place-items:center;z-index:90}#pl.on{display:grid}#pl .bx{width:min(1000px,94vw);aspect-ratio:16/9}#pl iframe,#pl video{width:100%;height:100%;border:0;border-radius:12px;background:#000}#pl .x{position:absolute;top:16px;right:16px}body.pg-isi{background-image:var(--bgi)!important;background-size:cover!important;background-attachment:fixed!important}body.pg-isi .card{background:rgba(21,29,46,.82);backdrop-filter:blur(8px)}body.pg-isi .two{grid-template-columns:1.3fr 1fr}#ok{min-height:460px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:36px}#ok h2{font-size:30px}#ok p{font-size:18px}.vf{grid-column:1/-1;max-width:980px;width:100%;margin:0 auto}.vfb{aspect-ratio:16/9;width:100%}.vfb iframe,.vfb video{width:100%;height:100%;border:0;border-radius:12px;background:#000}@media(max-width:900px){body.pg-isi .two{grid-template-columns:1fr}}';
   document.head.append(st);
 
   // ---- Bingkai per bagian ----
@@ -41,6 +41,25 @@
     pg.append(s);
   }
 
+  // ---- Halaman Pengisian: background + bingkai video ----
+  const emb = u => {
+    const y = yt(u), d = dr(u);
+    if (y) return `<iframe src="https://www.youtube.com/embed/${y}?rel=0" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    if (d) return `<iframe src="https://drive.google.com/file/d/${d}/preview" allowfullscreen></iframe>`;
+    if (/\.(mp4|webm)(\?|$)/i.test(u)) return `<video src="${esc(u)}" controls></video>`; return '';
+  };
+  function isi() {
+    const on = location.hash === '#/isi'; document.body.classList.toggle('pg-isi', on); if (!on) return;
+    const bg = (B.set || {}).bg;
+    document.body.style.setProperty('--bgi', bg ? `linear-gradient(rgba(11,15,25,.5),rgba(11,15,25,.78)),url(${drv(bg)})` : 'radial-gradient(circle at 15% 10%,rgba(59,130,246,.28),transparent 50%),radial-gradient(circle at 85% 85%,rgba(34,211,238,.2),transparent 45%),#0B0F19');
+    const two = v.querySelector('.two'); if (!two || two.querySelector('.vf')) return;
+    const x = B.foto.find(f => f.Jenis === 'video-form'), h = x && emb(x.Url);
+    if (!h && !(S && S.r === 'superadmin')) return;
+    const c = document.createElement('div'); c.className = 'card vf';
+    c.innerHTML = `<h2>${esc(x ? x.Nama : 'Video Panduan')}</h2>` + (h ? `<div class="vfb">${h}</div><small class="mu">${esc(x.Keterangan)}</small>` : '<p class="mu">Belum ada video. Tambahkan lewat Pengaturan → Foto Beranda & Galeri: pilih Jenis "video-form", lalu tempel link YouTube atau Google Drive. (Pesan ini hanya terlihat oleh super admin.)</p>');
+    two.append(c);
+  }
+
   // ---- Menu Pengaturan: ukuran bingkai + jenis "video" ----
   function pengaturan() {
     const ff = v.querySelector('#ff'); if (!ff || v.querySelector('#fb')) return;
@@ -53,10 +72,10 @@
       const r = await api('set.simpan', Object.fromEntries(new FormData(f))); b.disabled = false; toast(r.msg, !r.ok); if (r.ok) await segarBoot();
     });
     const jn = ff.querySelector('[name=Jenis]'), u = ff.querySelector('[name=Url]');
-    if (jn && ![...jn.options].some(o => o.value === 'video')) jn.add(new Option('video', 'video'));
-    if (jn && u) jn.addEventListener('change', () => { u.placeholder = jn.value === 'video' ? 'Tempel link YouTube atau Google Drive video' : 'Atau tempel URL foto (opsional)'; });
+    if (jn && ![...jn.options].some(o => o.value === 'video')) { jn.add(new Option('video', 'video')); jn.add(new Option('video-form', 'video-form')); }
+    if (jn && u) jn.addEventListener('change', () => { u.placeholder = jn.value.indexOf('video') === 0 ? 'Tempel link YouTube atau Google Drive video' : 'Atau tempel URL foto (opsional)'; });
   }
 
-  const run = () => { frames(); vids(); pengaturan(); };
+  const run = () => { frames(); vids(); pengaturan(); isi(); };
   new MutationObserver(run).observe(v, { childList: true, subtree: true }); run();
 })();
